@@ -124,16 +124,13 @@ class SignIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: const Color(0xFFF7D5DB),
+    return Scaffold(
+      backgroundColor: Color(0xFFF7D5DB),
+      appBar: AppBar(
+          centerTitle: true,
+          title: const Text(_title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))
       ),
-      home: Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text(_title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))),
         body: const MySignUpWidget(),
-      ),
     );
   }
 }
@@ -145,8 +142,12 @@ class MySignUpWidget extends StatefulWidget {
 }
 
 class _MySignUpWidgetState extends State<MySignUpWidget> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -168,7 +169,7 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
           Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 200, 10),
             child: TextField(
-              controller: nameController,
+              controller: usernameController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
@@ -183,7 +184,7 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
           Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 200, 10),
             child: TextField(
-              controller: nameController,
+              controller: firstNameController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
@@ -193,51 +194,55 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
                   labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)
 
               ),
+              keyboardType: TextInputType.name,
             ),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 200, 10),
             child: TextField(
-              controller: nameController,
+              controller: dobController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
                       borderRadius: BorderRadius.circular(50.0)
                   ),
                   labelText: 'Date of Birth: ',
-                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)
+                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
 
               ),
+              keyboardType: TextInputType.datetime,
             ),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 200, 10),
             child: TextField(
-              controller: nameController,
+              controller: heightController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
                       borderRadius: BorderRadius.circular(50.0)
                   ),
                   labelText: 'Height: ',
-                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)
-
+                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  suffixText: 'cm',
               ),
+              keyboardType: TextInputType.number
             ),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 200, 40),
             child: TextField(
-              controller: nameController,
+              controller: weightController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
                       borderRadius: BorderRadius.circular(50.0)
                   ),
                   labelText: 'Weight: ',
-                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)
-
+                  labelStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  suffixText: 'lb',
               ),
+              keyboardType: TextInputType.number,
             ),
           ),
           Container(
@@ -246,8 +251,7 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
               child: ElevatedButton(
                 child: const Text('LOGIN', style: TextStyle(fontSize: 30)),
                 onPressed: () {
-                  print(nameController.text);
-                  print(passwordController.text);
+
                 },
               )
           ),
