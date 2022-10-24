@@ -56,12 +56,6 @@ class Workout(db.Model):
     workoutname = db.Column(db.String(), unique=True)
     level = db.Column(db.String())
     description = db.Column(db.String())
-    password = db.Column(db.String())
-    dob = db.Column(db.String())
-    height = db.Column(db.Float())
-    weight = db.Column(db.Float())
-    gender = db.Column(db.String())
-    level = db.Column(db.String())
     api_key = db.Column(db.String())
 
     def __init__(self, api_key, workoutname, level, description):
