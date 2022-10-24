@@ -48,3 +48,38 @@ class User(db.Model):
             'height' : self.height,
             'weight' : self.weight,
         }
+
+class Workout(db.Model):
+    __tablename__ = 'workouts'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    workoutname = db.Column(db.String(), unique=True)
+    level = db.Column(db.String())
+    description = db.Column(db.String())
+    password = db.Column(db.String())
+    dob = db.Column(db.String())
+    height = db.Column(db.Float())
+    weight = db.Column(db.Float())
+    gender = db.Column(db.String())
+    level = db.Column(db.String())
+    api_key = db.Column(db.String())
+
+    def __init__(self, api_key, workoutname, level, description):
+        self.api_key = api_key
+        self.workoutname = workoutname
+        self.level = level
+        self.description = description
+
+        
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'api_key' : self.api_key,
+            'id' : self.id,
+            'workoutname' : self.workoutname,
+            'level' : self.level,
+            'description' : self.description,
+        }
