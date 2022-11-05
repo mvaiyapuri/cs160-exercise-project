@@ -31,7 +31,7 @@ class User(db.Model):
     level = db.Column(db.String())
     #api_key = db.Column(db.String())
 
-    def __init__(self, username, firstname, lastname, password, dob, height, weight):
+    def __init__(self, username, firstname, lastname, password, dob, height, weight, gender, level):
         #self.api_key = api_key
         self.username = username
         self.firstname = firstname
@@ -40,6 +40,8 @@ class User(db.Model):
         self.dob = dob
         self.height = height
         self.weight = weight
+        self.gender = gender
+        self.level = level
         
 
     def __repr__(self):
@@ -56,6 +58,8 @@ class User(db.Model):
             'dob' : self.dob,
             'height' : self.height,
             'weight' : self.weight,
+            'gender' : self.gender,
+            'level'  : self.level
         }
 
 
@@ -78,8 +82,10 @@ def add_user():
     dob = request.json['dob']
     height = request.json['height']
     weight = request.json['weight']
+    gender = request.json['gender']
+    level = request.json['level']
 
-    new_user = User(username, firstname, lastname, password, dob, height, weight)
+    new_user = User(username, firstname, lastname, password, dob, height, weight, gender, level)
     db.session.add(new_user)
     db.session.commit()
 
