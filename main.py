@@ -91,6 +91,12 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+@app.route('/fitYou/<id>', methods=['GET'])
+def get_user(id):
+    user = User.query.get(id)
+
+    return user_schema.jsonify(user)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
