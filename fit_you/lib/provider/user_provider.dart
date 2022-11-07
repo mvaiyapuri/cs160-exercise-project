@@ -5,8 +5,8 @@ import 'package:fit_you/models/User.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider with ChangeNotifier {
-  //final url = 'http://localhost:5000/fit_you';
-  final url = 'http://10.0.2.2:5000/fit_you';
+  //final url = 'http://localhost:5000/fitYou';
+  final url = 'http://10.0.2.2:5000/fitYou';
 
   Future<void> addUser(String username, String firstname, String lastname, String password, String dob, double height, double weight, String gender, String level) async {
 
