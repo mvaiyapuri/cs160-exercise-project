@@ -91,6 +91,29 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+@app.route('/fitYou/<id>', methods=['GET'])
+def get_user(id):
+    user = User.query.get(id)
+
+    return user_schema.jsonify(user)
+
+
+@app.route('/fitYou/<id>', methods=['PUT', 'PATCH'])
+def edit_user(id):
+    user = User.query.get(id)
+    user.username = request.json['username']
+    user.firstname = request.json['firstname']
+    user.lastname = request.json['lastname']
+    user.password = request.json['password']
+    user.dob = request.json['dob']
+    user.height = request.json['height']
+    user.weight = request.json['weight']
+    user.gender = request.json['gender']
+    user.level = request.json['level']
+    db.session.commit()
+
+    return user_schema.jsonify(user)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
