@@ -13,17 +13,21 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: const Color(0xFFF7D5DB),
-      ),
-      home: Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text(_title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))),
-        body: const MyStatefulWidget(),
-      ),
+    return ChangeNotifierProvider.value(
+      value: UserProvider(),
+      child:  MaterialApp(
+        title: _title,
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          scaffoldBackgroundColor: const Color(0xFFF7D5DB),
+        ),
+        home: Scaffold(
+          appBar: AppBar(centerTitle: true, title: const Text(_title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))),
+          body: const MyStatefulWidget(),
+        ),
+      )
     );
+
   }
 }
 
