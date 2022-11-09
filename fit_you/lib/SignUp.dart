@@ -247,7 +247,7 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
                 child: const Text('LOGIN', style: TextStyle(fontSize: 25)),
                 onPressed: () {
                   Provider.of<UserProvider>(context, listen: false).addUser(usernameController.text, firstNameController.text, lastNameController.text, passwordController.text, dobController.text, double.parse(heightController.text), double.parse(weightController.text), gendervalue, levelvalue);
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()),);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()),);
                 },
               )
           ),
