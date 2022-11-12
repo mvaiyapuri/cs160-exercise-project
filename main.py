@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from sqlalchemy.inspection import inspect
 #from flask_login import UserMixin
 #from werkzeug.security import generate_password_hash, check_password_hash
 #from flask_login import LoginManager
@@ -68,11 +67,6 @@ class User(db.Model):
             'gender' : self.gender,
             'level'  : self.level
         }
-    def primary_key_name(self):
-        return inspect(self).primary_key[0].name
-
-    def primary_key_value(self):
-        return getattr(self, self.primary_key_name())
     #def set_password(self, password):
         #self.password_hash = generate_password_hash(password)
 
@@ -126,15 +120,14 @@ def login():
     username = request.json['username']
     password = request.json['password']
 
-    #login = User.query.filter_by(username=username, password=password).first()
+    login = User.query.filter_by(username=username, password=password).first()
 
     if login is None:
         return jsonify(["Username and/or password is invalid"])
 
     else:
-        #tempUser = inspect(User)
         # Login successful
-        return jsonify(["Login successful"])
+        return jsonify(id=login.id)
 
 @app.route('/fitYou/<id>', methods=['GET'])
 def get_user(id):
