@@ -109,7 +109,7 @@ def add_user():
 
         id = new_user.id
         # Register successful
-        return jsonify(id=id)
+        return jsonify(new_user)
 
     else:
         return jsonify(["User Exists"])
@@ -127,16 +127,16 @@ def login():
 
     else:
         # Login successful
-        return jsonify(id=login.id)
+        return jsonify(login)
 
-@app.route('/fitYou/<id>', methods=['GET'])
+@app.route('/profile/<id>', methods=['GET'])
 def get_user(id):
     user = User.query.get(id)
 
     return user_schema.jsonify(user)
 
 
-@app.route('/fitYou/<id>', methods=['PUT', 'PATCH'])
+@app.route('/profile/<id>', methods=['PUT', 'PATCH'])
 def edit_user(id):
     user = User.query.get(id)
     user.username = request.json['username']
