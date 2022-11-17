@@ -1,3 +1,4 @@
+import 'package:fit_you/home.dart';
 import 'package:fit_you/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class Login extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(centerTitle: true, title: const Text(_title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))),
           body: const MyStatefulWidget(),
+
         ),
       )
     );
@@ -39,7 +41,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -61,7 +63,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: nameController,
+                controller: usernameController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 3, color: Colors.redAccent),
@@ -100,8 +102,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('LOGIN', style: TextStyle(fontSize: 30)),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
+                    Provider.of<UserProvider>(context, listen: false).loginUser(usernameController.text, passwordController.text);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
                   },
                 )
             ),

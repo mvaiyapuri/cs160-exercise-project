@@ -1,50 +1,131 @@
 import 'package:flutter/material.dart';
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+import 'package:provider/provider.dart';
+
+import '../provider/user_provider.dart';
+
+class TasksWidget extends StatefulWidget {
+  const TasksWidget({Key? key}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<TasksWidget> createState() => _TasksWidgetState();
 }
 
-class _ProfileState extends State<Profile> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class _TasksWidgetState extends State<TasksWidget> {
+  TextEditingController newTaskController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: newTaskController,
+                  decoration: InputDecoration(
+                    labelText: 'New Task',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.amberAccent),
+                  foregroundColor: MaterialStateProperty.all(Colors.purple)
+                ),
+               child: Text("Add"),
+                onPressed: () {
+                }
+              )
+            ],
+          ),
+          FutureBuilder(
+            future: Provider.of<UserProvider>(context, listen: false).getUser(8),
+            builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+              ? Center(child: CircularProgressIndicator())
+              :
+            Consumer<UserProvider>(
+              child: Center(
+                heightFactor: MediaQuery.of(context).size.height * 0.03,
+                child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
+              ),
+              builder: (ctx, todoProvider, child) => todoProvider.user.username == null
+                ?  child as Widget
+                : Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: ListView.builder(
+                      itemBuilder: (ctx, i) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ListTile(
+                        tileColor: Colors.black12,
+                        leading: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      title: Text(todoProvider.user.username),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: ()  {
+                        }
+                      ) ,
+                      onTap: () {},
+    ),
+    )
+    ),
+    ),
+    ),
+    ),
+    )
+    ],
+    ),
+    );
+    }
+}
+class Profile extends StatelessWidget {
+  const Profile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
+        value: UserProvider(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+          ),
+          home: const MyHomePage(title: 'Todo app'),
+        )
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Color(0xFFF9D6DC),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF0005),
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0, 0),
-          child: Text(
-            'Profile',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            color: Colors.transparent,
-            iconSize: 60,
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () {
-              print('IconButton pressed ...');
-            },
-          ),
-        ],
+        title: Text(widget.title),
         centerTitle: true,
-        elevation: 2,
       ),
+      body: TasksWidget(),
     );
   }
 }

@@ -61,6 +61,30 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 2,
       ),
+        bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.red,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Color(0xFFF9D6DC),
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.edit),
+                label: 'New Plan',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.directions_run_rounded),
+                label: 'Workout Plan',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart),
+                label: 'Stats',
+              ),
+            ]
+        ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
