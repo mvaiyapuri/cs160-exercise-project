@@ -127,7 +127,7 @@ def login():
 
     else:
         # Login successful
-        return jsonify(login)
+        return user_schema.jsonify(login)
 
 @app.route('/profile/<id>', methods=['GET'])
 def get_user(id):

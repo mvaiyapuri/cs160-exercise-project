@@ -7,7 +7,17 @@ import 'package:http/http.dart' as http;
 class UserProvider with ChangeNotifier {
   //final url = 'http://localhost:5000/fitYou';
   final url = 'http://10.0.2.2:5000/';
-  late User _user;
+  User _user = User(
+      username: 'username',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      password: 'password',
+      dob: 'dob',
+      height: 0,
+      weight: 0,
+      gender: 'gender',
+      level: 'level'
+  );
 
   User get user{
     return _user;
@@ -38,7 +48,7 @@ class UserProvider with ChangeNotifier {
     final headers = {'Content-Type': 'application/json'};
     final response = await http.post(Uri.parse(url + 'signup'), headers: headers, body: json.encode(request));
     Map<String, dynamic> responsePayload = json.decode(response.body);
-    final user = User(
+    _user = User(
         username: responsePayload['username'],
         firstname: responsePayload['firstname'],
         lastname: responsePayload['lastname'],
