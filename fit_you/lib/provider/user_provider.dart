@@ -23,10 +23,14 @@ class UserProvider with ChangeNotifier {
     return _user;
   }
 
+  set user (User newUser){
+    _user = newUser;
+  }
+
   Future<void> loginUser(String username, String password) async{
     Map<String, dynamic> request = {"username": username, "password": password};
     final headers = {'Content-Type': 'application/json'};
-    final response = await http.post(Uri.parse(url + 'login'), headers: headers, body: json.encode(request));
+    final response = await http.post(Uri.parse('${url}login'), headers: headers, body: json.encode(request));
     Map<String, dynamic> responsePayload = json.decode(response.body);
     _user = User(
         username: responsePayload['username'],
@@ -39,14 +43,14 @@ class UserProvider with ChangeNotifier {
         gender: responsePayload['gender'],
         level: responsePayload['level']
     );
-
+    notifyListeners();
   }
 
   Future<void> addUser(String username, String firstname, String lastname, String password, String dob, double height, double weight, String gender, String level) async {
 
     Map<String, dynamic> request = {"username": username, "firstname": firstname, "lastname": lastname, "password": password, "dob": dob, "height": height, "weight": weight, "gender": gender, "level": level};
     final headers = {'Content-Type': 'application/json'};
-    final response = await http.post(Uri.parse(url + 'signup'), headers: headers, body: json.encode(request));
+    final response = await http.post(Uri.parse('${url}signup'), headers: headers, body: json.encode(request));
     Map<String, dynamic> responsePayload = json.decode(response.body);
     _user = User(
         username: responsePayload['username'],
@@ -59,24 +63,26 @@ class UserProvider with ChangeNotifier {
         gender: responsePayload['gender'],
         level: responsePayload['level']
     );
+    notifyListeners();
   }
 
-  Future<void> getUser(dynamic id) async{
+  Future<void> get getUser async{
     var response;
+    var userId = _user.id;
     try{
-      response = await http.get(Uri.parse(url + "profile/" + id.toString()));
-      dynamic body = json.decode(response.body);
-      _user = body.map((e) => User(
-          username: e['username'],
-          firstname: e['firstname'],
-          lastname: e['lastname'],
-          password: e['password'],
-          dob: e['dob'],
-          height: e['height'],
-          weight: e['weight'],
-          gender: e['gender'],
-          level: e['level']
-      ));
+      response = await http.get(Uri.parse("${url}profile/$userId"));
+      Map<String, dynamic> responsePayload = json.decode(response.body);
+      _user = User(
+          username: responsePayload['username'],
+          firstname: responsePayload['firstname'],
+          lastname: responsePayload['lastname'],
+          password: responsePayload['password'],
+          dob: responsePayload['dob'],
+          height: responsePayload['height'],
+          weight: responsePayload['weight'],
+          gender: responsePayload['gender'],
+          level: responsePayload['level']
+      );
     }catch(e){
       print(e);
     }

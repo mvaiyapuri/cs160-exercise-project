@@ -43,7 +43,7 @@ class _TasksWidgetState extends State<TasksWidget> {
             ],
           ),
           FutureBuilder(
-            future: Provider.of<UserProvider>(context, listen: false).getUser(8),
+            future: Provider.of<UserProvider>(context, listen: false).getUser,
             builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
               ? Center(child: CircularProgressIndicator())
@@ -53,7 +53,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                 heightFactor: MediaQuery.of(context).size.height * 0.03,
                 child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
               ),
-              builder: (ctx, todoProvider, child) => todoProvider.user.username == null
+              builder: (ctx, userProvider, child) => userProvider.user.username == null
                 ?  child as Widget
                 : Padding(
                   padding: const EdgeInsets.only(top: 20),
@@ -69,7 +69,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                           color: Colors.white,
                           size: 30,
                         ),
-                      title: Text(todoProvider.user.username),
+                      title: Text(userProvider.user.username),
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: ()  {
