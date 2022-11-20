@@ -53,7 +53,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                 heightFactor: MediaQuery.of(context).size.height * 0.03,
                 child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
               ),
-              builder: (ctx, userProvider, child) => userProvider.user.username == null
+              builder: (ctx, userProvider, child) => !snapshot.hasData
                 ?  child as Widget
                 : Padding(
                   padding: const EdgeInsets.only(top: 20),
@@ -69,7 +69,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                           color: Colors.white,
                           size: 30,
                         ),
-                      title: Text(userProvider.user.username),
+                      title: Text(snapshot.data!.username),
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: ()  {
