@@ -19,29 +19,6 @@ class _TasksWidgetState extends State<TasksWidget> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: newTaskController,
-                  decoration: InputDecoration(
-                    labelText: 'New Task',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10,),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.amberAccent),
-                  foregroundColor: MaterialStateProperty.all(Colors.purple)
-                ),
-               child: Text("Add"),
-                onPressed: () {
-                }
-              )
-            ],
-          ),
           FutureBuilder(
             future: Provider.of<UserProvider>(context, listen: false).getUser,
             builder: (ctx, snapshot) =>
@@ -59,27 +36,105 @@ class _TasksWidgetState extends State<TasksWidget> {
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.6,
-                    child: ListView.builder(
-                      itemBuilder: (ctx, i) => Padding(
+                    child: Builder(
+                      builder: (ctx) => Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: ListTile(
-                        tileColor: Colors.black12,
-                        leading: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      title: Text(snapshot.data!.username),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        onPressed: ()  {
-                        }
-                      ) ,
-                      onTap: () {},
-    ),
-    )
-    ),
-    ),
+                      child: Column(
+                        children: [
+                          Text(
+                                snapshot.data!.username,
+                                style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 50),
+                            ),
+                          SizedBox(height: 50),
+                          Text(
+                            snapshot.data!.firstname + " " + snapshot.data!.lastname,
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            snapshot.data!.gender,
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          ),
+                          SizedBox(height: 20),
+                          Row(
+                            children: const [
+                              SizedBox(width: 60, height: 30),
+                              Expanded(
+                                child: Text(
+                                  "Height:",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Weight:",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const SizedBox(width: 60, height: 30),
+                              Expanded(
+                                child: Text(
+                                  snapshot.data!.height.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  snapshot.data!.weight.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(Icons.cake, size: 30, color: Colors.red),
+                                ),
+                                TextSpan(
+                                  text: snapshot.data!.dob,
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30)
+                                ),
+                              ]
+                            )
+
+                            ,
+                          ),
+                        ]
+                      ),
+                      )
+                    ),
+                  ),
     ),
     ),
     )
@@ -88,42 +143,66 @@ class _TasksWidgetState extends State<TasksWidget> {
     );
     }
 }
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+
+
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-        value: UserProvider(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.purple,
-          ),
-          home: const MyHomePage(title: 'Todo app'),
-        )
-    );
-  }
+  State<Profile> createState() => _ProfileState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _ProfileState extends State<Profile> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      key: scaffoldKey,
+      backgroundColor: Color(0xFFF9D6DC),
+      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Color(0xFFFF0005),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          color: Colors.transparent,
+          iconSize: 60,
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Align(
+          alignment: AlignmentDirectional(0, 0),
+          child: Text(
+            'Profile',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 22,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            color: Colors.transparent,
+            iconSize: 60,
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {
+              print('IconButton pressed ...');
+            },
+          ),
+        ],
         centerTitle: true,
+        elevation: 2,
       ),
       body: TasksWidget(),
     );
