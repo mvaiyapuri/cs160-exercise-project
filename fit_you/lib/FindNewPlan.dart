@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'Profile.dart';
-import 'FindNewPlan.dart';
-import 'Stats.dart';
+import 'home.dart';
 import 'WorkoutPlan.dart';
+import 'Stats.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class FindNewPlan extends StatefulWidget {
+  const FindNewPlan({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<FindNewPlan> createState() => _FindNewPlanState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _FindNewPlanState extends State<FindNewPlan> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         title: Align(
           alignment: AlignmentDirectional(0, 0),
           child: Text(
-            'Home',
+            'Find a New Plan',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
@@ -65,53 +65,53 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 2,
       ),
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.red,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Color(0xFFF9D6DC),
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.edit),
-                label: 'New Plan',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.directions_run_rounded),
-                label: 'Workout Plan',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.bar_chart),
-                label: 'Stats',
-              ),
-            ],
-          currentIndex: _selectedIndex,
-          onTap: (int index) {
-              switch(index){
-                case 0:
-                  _HomePageState();
-                  break;
-                case 1:
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const FindNewPlan()));
-                  break;
-                case 2:
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
-                  break;
-                case 3:
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
-                  break;
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.red,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Color(0xFFF9D6DC),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit),
+            label: 'New Plan',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_run_rounded),
+            label: 'Workout Plan',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Stats',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          switch(index){
+            case 0:
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+              break;
+            case 1:
+              _FindNewPlanState();
+              break;
+            case 2:
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
+              break;
+            case 3:
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
+              break;
+          }
+          setState(
+                  (){
+                _selectedIndex = index;
               }
-              setState(
-                (){
-                  _selectedIndex = index;
-                }
-              );
-          },
+          );
+        },
 
-        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Current Workout Plan', style: TextStyle(fontSize: 18)),
+                    child: const Text('Beginner', style: TextStyle(fontSize: 18)),
                     onPressed: () {
                     },
                   )
@@ -133,10 +133,8 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Current Stats & Goals', style: TextStyle(fontSize: 18)),
+                    child: const Text('Intermediate', style: TextStyle(fontSize: 18)),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
-
                     },
                   )
               ),
@@ -145,9 +143,8 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Find a New Plan', style: TextStyle(fontSize: 18)),
+                    child: const Text('Advanced', style: TextStyle(fontSize: 18)),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FindNewPlan()));
                     },
                   )
               ),

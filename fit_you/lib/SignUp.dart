@@ -1,7 +1,7 @@
 import 'package:fit_you/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'home.dart';
+import 'main.dart';
 import '../provider/user_provider.dart';
 
 class SignIn extends StatelessWidget {
@@ -247,7 +247,7 @@ class _MySignUpWidgetState extends State<MySignUpWidget> {
                 child: const Text('LOGIN', style: TextStyle(fontSize: 25)),
                 onPressed: () {
                   Provider.of<UserProvider>(context, listen: false).addUser(usernameController.text, firstNameController.text, lastNameController.text, passwordController.text, dobController.text, double.parse(heightController.text), double.parse(weightController.text), gendervalue, levelvalue);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()),);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()),);
                 },
               )
           ),

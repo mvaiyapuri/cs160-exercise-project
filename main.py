@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+#from flask_login import UserMixin
+#from werkzeug.security import generate_password_hash, check_password_hash
+#from flask_login import LoginManager
 import os
 
 app = Flask(__name__)
@@ -12,9 +15,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 # suppress SQLALCHEMY_TRACK_MODIFICATIONS warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+#login = LoginManager()
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+#login.init_app(app)
+#login.login_view = 'login'
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -61,6 +67,15 @@ class User(db.Model):
             'gender' : self.gender,
             'level'  : self.level
         }
+    #def set_password(self, password):
+        #self.password_hash = generate_password_hash(password)
+
+    #def check_password(self, password):
+        #return check_password_hash(self. password_hash, password)
+
+#@login.user_loader
+#def load_user(id):
+#    return User.query.get(int(id))
 
 
 # user schema
@@ -72,33 +87,56 @@ class UserSchema(ma.Schema):
 # Initialize schema
 user_schema = UserSchema()
 
-
-@app.route('/fitYou', methods=['POST'])
+# Adds user to database if user doesn't exist
+@app.route('/signup', methods=['POST'])
 def add_user():
+    tempUsername = request.json['username']
+    username = User.query.filter_by(username=tempUsername).first()
+
+    if username is None:
+        firstname = request.json['firstname']
+        lastname = request.json['lastname']
+        password = request.json['password']
+        dob = request.json['dob']
+        height = request.json['height']
+        weight = request.json['weight']
+        gender = request.json['gender']
+        level = request.json['level']
+
+        new_user = User(tempUsername, firstname, lastname, password, dob, height, weight, gender, level)
+        db.session.add(new_user)
+        db.session.commit()
+
+        id = new_user.id
+        # Register successful
+        return jsonify(new_user)
+
+    else:
+        return jsonify(["User Exists"])
+
+# Checks if username and password matches
+@app.route('/login', methods=['POST'])
+def login():
     username = request.json['username']
-    firstname = request.json['firstname']
-    lastname = request.json['lastname']
     password = request.json['password']
-    dob = request.json['dob']
-    height = request.json['height']
-    weight = request.json['weight']
-    gender = request.json['gender']
-    level = request.json['level']
 
-    new_user = User(username, firstname, lastname, password, dob, height, weight, gender, level)
-    db.session.add(new_user)
-    db.session.commit()
+    login = User.query.filter_by(username=username, password=password).first()
 
-    return user_schema.jsonify(new_user)
+    if login is None:
+        return jsonify(["Username and/or password is invalid"])
 
-@app.route('/fitYou/<id>', methods=['GET'])
+    else:
+        # Login successful
+        return user_schema.jsonify(login)
+
+@app.route('/profile/<id>', methods=['GET'])
 def get_user(id):
     user = User.query.get(id)
 
     return user_schema.jsonify(user)
 
 
-@app.route('/fitYou/<id>', methods=['PUT', 'PATCH'])
+@app.route('/profile/<id>', methods=['PUT', 'PATCH'])
 def edit_user(id):
     user = User.query.get(id)
     user.username = request.json['username']
