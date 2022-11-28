@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_you/models/User.dart';
 import 'package:http/http.dart' as http;
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 class UserProvider with ChangeNotifier {
   //final url = 'http://localhost:5000/fitYou';
   final url = 'http://10.0.2.2:5000/';
+
   static User user = User(
       username: 'username',
       firstname: 'firstname',
@@ -52,6 +54,8 @@ class UserProvider with ChangeNotifier {
     user.level = responsePayload['level'];
     print(user.password);
     notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('id', user.id);
     return user;
   }
 
@@ -82,7 +86,8 @@ class UserProvider with ChangeNotifier {
 
   Future<User> get getUser async{
     var response;
-    var userId = user.id;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
     //try{
       response = await http.get(Uri.parse("${url}profile/$userId"));
       Map<String, dynamic> responsePayload = json.decode(response.body);
