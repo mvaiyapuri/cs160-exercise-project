@@ -77,15 +77,53 @@ class User(db.Model):
 #def load_user(id):
 #    return User.query.get(int(id))
 
+# Workout model
+class Workout(db.Model):
+    __tablename__ = 'workouts'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    workoutname = db.Column(db.String(), unique=True)
+    level = db.Column(db.String())
+    description = db.Column(db.String())
+    #api_key = db.Column(db.String())
+
+    def __init__(self, api_key, workoutname, level, description):
+        #self.api_key = api_key
+        self.workoutname = workoutname
+        self.level = level
+        self.description = description
+
+        
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            #'api_key' : self.api_key,
+            'id' : self.id,
+            'workoutname' : self.workoutname,
+            'level' : self.level,
+            'description' : self.description,
+        }
+
 
 # user schema
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'username', 'firstname', 'lastname', 'password', 'dob', 'height', 'weight', 'gender', 'level')
 
+# Workout schema
+class WorkoutSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'workoutName', 'level', 'description', )
+
 
 # Initialize schema
 user_schema = UserSchema()
+
+# Initialize workout schema
+workout_schema = WorkoutSchema()
 
 # Adds user to database if user doesn't exist
 @app.route('/signup', methods=['POST'])
