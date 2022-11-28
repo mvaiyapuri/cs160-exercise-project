@@ -58,7 +58,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   style: TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
-                      fontSize: 70),
+                      fontSize: 60),
                 )),
             Container(
               padding: const EdgeInsets.all(10),

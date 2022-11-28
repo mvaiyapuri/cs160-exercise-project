@@ -125,6 +125,7 @@ class _HomePageState extends State<HomePage> {
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                     child: const Text('Current Workout Plan', style: TextStyle(fontSize: 18)),
                     onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
                     },
                   )
               ),
