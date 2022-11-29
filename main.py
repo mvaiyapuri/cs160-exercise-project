@@ -124,6 +124,7 @@ user_schema = UserSchema()
 
 # Initialize workout schema
 workout_schema = WorkoutSchema()
+workouts_schema = WorkoutSchema(many=True)
 
 # Adds user to database if user doesn't exist
 @app.route('/signup', methods=['POST'])
@@ -189,6 +190,17 @@ def edit_user(id):
     db.session.commit()
 
     return user_schema.jsonify(user)
+
+# This function gets all available workouts for a given user
+@app.route('/workout/<id>', methods=['GET'])
+def get_workout(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel)
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
 
 
 if __name__ == '__main__':
