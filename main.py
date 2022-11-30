@@ -85,13 +85,17 @@ class Workout(db.Model):
     workoutname = db.Column(db.String(), unique=True)
     level = db.Column(db.String())
     description = db.Column(db.String())
+    workoutType = db.Column(db.String())
+    duration = db.Column(db.Integer())
     #api_key = db.Column(db.String())
 
-    def __init__(self, api_key, workoutname, level, description):
+    def __init__(self, api_key, workoutname, level, description, workoutType, duration):
         #self.api_key = api_key
         self.workoutname = workoutname
         self.level = level
         self.description = description
+        self.workoutType = workoutType
+        self.duration = duration
 
         
 
@@ -105,6 +109,8 @@ class Workout(db.Model):
             'workoutname' : self.workoutname,
             'level' : self.level,
             'description' : self.description,
+            'workoutType' : self.workoutType,
+            'duration' : self.duration,
         }
 
 
@@ -116,7 +122,7 @@ class UserSchema(ma.Schema):
 # Workout schema
 class WorkoutSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'workoutName', 'level', 'description', )
+        fields = ('id', 'workoutName', 'level', 'description', 'workoutType', 'duration')
 
 
 # Initialize schema
