@@ -82,7 +82,7 @@ class Workout(db.Model):
     __tablename__ = 'workouts'
 
     id = db.Column(db.Integer(), primary_key=True)
-    workoutname = db.Column(db.String(), unique=True)
+    workoutname = db.Column(db.String())
     level = db.Column(db.String())
     description = db.Column(db.String())
     workoutType = db.Column(db.String())
