@@ -122,7 +122,7 @@ class UserSchema(ma.Schema):
 # Workout schema
 class WorkoutSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'workoutName', 'level', 'description', 'workoutType', 'duration')
+        fields = ('id', 'workoutname', 'level', 'description', 'workoutType', 'duration')
 
 
 # Initialize schema
@@ -209,7 +209,7 @@ def get_workout(id):
     return workouts_schema.jsonify(result)
 
 # This function gets all available workouts for a given user
-@app.route('/workout/<id>', methods=['GET'])
+@app.route('/warmup/<id>', methods=['GET'])
 def get_warmup(id):
     user = User.query.get(id)
     userLevel = user.level
@@ -221,7 +221,7 @@ def get_warmup(id):
 
 
 # This function gets all available workouts for a given user
-@app.route('/workout/<id>', methods=['GET'])
+@app.route('/mainWorkout/<id>', methods=['GET'])
 def get_mainWorkout(id):
     user = User.query.get(id)
     userLevel = user.level
@@ -233,7 +233,7 @@ def get_mainWorkout(id):
 
 
 # This function gets all available workouts for a given user
-@app.route('/workout/<id>', methods=['GET'])
+@app.route('/cooldown/<id>', methods=['GET'])
 def get_cooldown(id):
     user = User.query.get(id)
     userLevel = user.level
