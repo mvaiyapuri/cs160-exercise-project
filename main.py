@@ -77,15 +77,60 @@ class User(db.Model):
 #def load_user(id):
 #    return User.query.get(int(id))
 
+# Workout model
+class Workout(db.Model):
+    __tablename__ = 'workouts'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    workoutname = db.Column(db.String())
+    level = db.Column(db.String())
+    description = db.Column(db.String())
+    workoutType = db.Column(db.String())
+    duration = db.Column(db.Integer())
+    #api_key = db.Column(db.String())
+
+    def __init__(self, api_key, workoutname, level, description, workoutType, duration):
+        #self.api_key = api_key
+        self.workoutname = workoutname
+        self.level = level
+        self.description = description
+        self.workoutType = workoutType
+        self.duration = duration
+
+        
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            #'api_key' : self.api_key,
+            'id' : self.id,
+            'workoutname' : self.workoutname,
+            'level' : self.level,
+            'description' : self.description,
+            'workoutType' : self.workoutType,
+            'duration' : self.duration,
+        }
+
 
 # user schema
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'username', 'firstname', 'lastname', 'password', 'dob', 'height', 'weight', 'gender', 'level')
 
+# Workout schema
+class WorkoutSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'workoutName', 'level', 'description', 'workoutType', 'duration')
+
 
 # Initialize schema
 user_schema = UserSchema()
+
+# Initialize workout schema
+workout_schema = WorkoutSchema()
+workouts_schema = WorkoutSchema(many=True)
 
 # Adds user to database if user doesn't exist
 @app.route('/signup', methods=['POST'])
@@ -151,6 +196,52 @@ def edit_user(id):
     db.session.commit()
 
     return user_schema.jsonify(user)
+
+# This function gets all available workouts for a given user
+@app.route('/workout/<id>', methods=['GET'])
+def get_workout(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel)
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
+
+# This function gets all available workouts for a given user
+@app.route('/workout/<id>', methods=['GET'])
+def get_warmup(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel, workoutType='warmup')
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
+
+
+# This function gets all available workouts for a given user
+@app.route('/workout/<id>', methods=['GET'])
+def get_mainWorkout(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel, workoutType='mainWorkout')
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
+
+
+# This function gets all available workouts for a given user
+@app.route('/workout/<id>', methods=['GET'])
+def get_cooldown(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel, workoutType='cooldown')
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
 
 
 if __name__ == '__main__':
