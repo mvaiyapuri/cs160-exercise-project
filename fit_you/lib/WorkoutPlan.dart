@@ -1,8 +1,10 @@
+import 'package:fit_you/LearnWorkout.dart';
 import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'home.dart';
 import 'FindNewPlan.dart';
 import 'Stats.dart';
+import 'LearnWorkout.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -113,18 +115,127 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
 
       ),
 
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            //mainAxisSize: MainAxisSize.max,
-            children:[
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              //mainAxisSize: MainAxisSize.max,
+              children:[
+                const SizedBox(height: 10),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                        '   Warmup',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30
+                        )
+                    )
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+                    child: const Text('Temp Workout', style: TextStyle(fontSize: 18)),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
 
-            ],
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                        '   Main Exercises',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30
+                        )
+                    )
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+                    child: const Text('Temp Workout', style: TextStyle(fontSize: 18)),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
+
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                        '   Cool Down',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30
+                        )
+                    )
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+                    child: const Text('Temp Workout', style: TextStyle(fontSize: 18)),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
+
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "OR",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
+                ),
+                const SizedBox(height: 10),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                        '   Recreation & Sports',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30
+                        )
+                    )
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+                    child: const Text('Temp Workout', style: TextStyle(fontSize: 18)),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
+
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 }

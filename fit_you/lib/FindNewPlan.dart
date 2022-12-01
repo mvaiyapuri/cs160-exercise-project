@@ -120,40 +120,40 @@ class _FindNewPlanState extends State<FindNewPlan> {
             children: [
               Container(
                   height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Beginner', style: TextStyle(fontSize: 18)),
+                    child: const Text('Beginner', style: TextStyle(fontSize: 25)),
                     onPressed: () {
                     },
                   )
               ),
               Container(
                   height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Intermediate', style: TextStyle(fontSize: 18)),
+                    child: const Text('Intermediate', style: TextStyle(fontSize: 25)),
                     onPressed: () {
                     },
                   )
               ),
               Container(
                   height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Advanced', style: TextStyle(fontSize: 18)),
+                    child: const Text('Advanced', style: TextStyle(fontSize: 25)),
                     onPressed: () {
                     },
                   )
               ),
               Align(
-                alignment: AlignmentDirectional(0.95, 0),
+                alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 240, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(30, 120, 0, 0),
                   child: Image.asset(
-                    'assets/FitYouLogo.png',
+                    'assets/waterbottle.png',
                     width: 110,
                     height: 100,
                     fit: BoxFit.scaleDown,

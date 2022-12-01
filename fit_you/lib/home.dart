@@ -118,44 +118,73 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                  height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Current Workout Plan', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
-                    },
-                  )
+              const SizedBox(height: 30),
+              GestureDetector(
+                  child: Container(
+                      width:400,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image:AssetImage("assets/workoutPlan.png"),
+                              fit:BoxFit.cover
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Workout Plan", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, backgroundColor: Colors.red))
+                        ) // button text
+                      ),
+                  onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
+                  }
               ),
-              Container(
-                  height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Current Stats & Goals', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
-
-                    },
-                  )
+              const SizedBox(height: 30),
+              GestureDetector(
+                  child: Container(
+                      width:400,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image:AssetImage("assets/stats.png"),
+                            fit:BoxFit.cover
+                        ),
+                      ),
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Current Stats & Goals", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, backgroundColor: Colors.red))
+                      ) // button text
+                  ),
+                  onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
+                  }
               ),
-              Container(
-                  height: 100,
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Find a New Plan', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FindNewPlan()));
-                    },
-                  )
+              const SizedBox(height: 30),
+              GestureDetector(
+                  child: Container(
+                      width:400,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image:AssetImage("assets/find.png"),
+                            fit:BoxFit.cover
+                        ),
+                      ),
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Find a New Plan", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, backgroundColor: Colors.red))
+                      ) // button text
+                  ),
+                  onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const FindNewPlan()));
+                  }
               ),
               Align(
-                alignment: AlignmentDirectional(0.95, 0),
+                alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 240, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 145, 10, 0),
                   child: Image.asset(
                     'assets/FitYouLogo.png',
                     width: 110,

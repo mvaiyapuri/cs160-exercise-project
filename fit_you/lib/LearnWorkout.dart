@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'home.dart';
-import 'WorkoutPlan.dart';
 import 'FindNewPlan.dart';
+import 'Stats.dart';
+import 'WorkoutPlan.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
-class StatsPage extends StatefulWidget {
-  const StatsPage({Key? key}) : super(key: key);
+class LearnWorkout extends StatefulWidget {
+  const LearnWorkout({Key? key}) : super(key: key);
 
   @override
-  State<StatsPage> createState() => _StatsPageState();
+  State<LearnWorkout> createState() => _LearnWorkoutState();
 }
 
-class _StatsPageState extends State<StatsPage> {
+class _LearnWorkoutState extends State<LearnWorkout> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 3;
+  int _selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _StatsPageState extends State<StatsPage> {
         title: Align(
           alignment: AlignmentDirectional(0, 0),
           child: Text(
-            'Stats & Goals',
+            'Learn Workout',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
@@ -101,7 +102,7 @@ class _StatsPageState extends State<StatsPage> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
               break;
             case 3:
-              StatsPage();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsPage()));
               break;
           }
           setState(
@@ -120,19 +121,7 @@ class _StatsPageState extends State<StatsPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             //mainAxisSize: MainAxisSize.max,
             children:[
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                  child: Image.asset(
-                    'assets/statsPage.png',
-                    width: 400,
-                    height: 600,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),

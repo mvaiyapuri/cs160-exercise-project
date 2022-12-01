@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/user_provider.dart';
+import 'main.dart';
 
 class TasksWidget extends StatefulWidget {
   const TasksWidget({Key? key}) : super(key: key);
@@ -15,131 +16,151 @@ class _TasksWidgetState extends State<TasksWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          FutureBuilder(
-            future: Provider.of<UserProvider>(context, listen: false).getUser,
-            builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-              ? Center(child: CircularProgressIndicator())
-              :
-            Consumer<UserProvider>(
-              child: Center(
-                heightFactor: MediaQuery.of(context).size.height * 0.03,
-                child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
-              ),
-              builder: (ctx, userProvider, child) => !snapshot.hasData
-                ?  child as Widget
-                : Padding(
+    return Stack(
+      //padding: const EdgeInsets.all(20.0),
+      children: <Widget>[
+        Container(
+          decoration: new BoxDecoration(
+            image: new DecorationImage(image: new AssetImage("assets/background.png"), fit: BoxFit.cover, opacity: 0.3),
+          ),
+        ),
+        Column(
+          children: [
+            FutureBuilder(
+              future: Provider.of<UserProvider>(context, listen: false).getUser,
+              builder: (ctx, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? Center(child: CircularProgressIndicator())
+                  :
+              Consumer<UserProvider>(
+                child: Center(
+                  heightFactor: MediaQuery.of(context).size.height * 0.03,
+                  child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
+                ),
+                builder: (ctx, userProvider, child) => !snapshot.hasData
+                    ?  child as Widget
+                    : Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.6,
                     child: Builder(
-                      builder: (ctx) => Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Column(
-                        children: [
-                          Text(
-                                snapshot.data!.username,
-                                style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 50),
-                            ),
-                          SizedBox(height: 50),
-                          Text(
-                            snapshot.data!.firstname + " " + snapshot.data!.lastname,
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            snapshot.data!.gender,
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
-                          SizedBox(height: 20),
-                          Row(
-                            children: const [
-                              SizedBox(width: 60, height: 30),
-                              Expanded(
-                                child: Text(
-                                  "Height:",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "Weight:",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 60, height: 30),
-                              Expanded(
-                                child: Text(
-                                  snapshot.data!.height.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  snapshot.data!.weight.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          RichText(
-                            text: TextSpan(
+                        builder: (ctx) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Column(
                               children: [
-                                WidgetSpan(
-                                  child: Icon(Icons.cake, size: 30, color: Colors.red),
-                                ),
-                                TextSpan(
-                                  text: snapshot.data!.dob,
+                                SizedBox(height: 20),
+                                Text(
+                                  snapshot.data!.username,
                                   style: TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 30)
+                                      fontSize: 50),
+                                ),
+                                SizedBox(height: 50),
+                                Text(
+                                  snapshot.data!.firstname + " " + snapshot.data!.lastname,
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  snapshot.data!.gender,
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  children: const [
+                                    SizedBox(width: 60, height: 30),
+                                    Expanded(
+                                      child: Text(
+                                        "Height:",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "Weight:",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 60, height: 30),
+                                    Expanded(
+                                      child: Text(
+                                        snapshot.data!.height.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        snapshot.data!.weight.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                RichText(
+                                  text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          child: Icon(Icons.cake, size: 30, color: Colors.red),
+                                        ),
+                                        TextSpan(
+                                            text: snapshot.data!.dob,
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30)
+                                        ),
+                                      ]
+                                  )
+
+                                  ,
+                                ),
+                                IconButton(
+                                  color: Colors.transparent,
+                                  iconSize: 60,
+                                  icon: Icon(
+                                    Icons.logout,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+                                  },
                                 ),
                               ]
-                            )
-
-                            ,
                           ),
-                        ]
-                      ),
-                      )
+                        )
                     ),
                   ),
-    ),
-    ),
-    )
-    ],
-    ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ]
     );
     }
 }
