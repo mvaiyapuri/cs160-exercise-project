@@ -14,8 +14,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
       child:  MaterialApp(
         title: _title,
         theme: ThemeData(
