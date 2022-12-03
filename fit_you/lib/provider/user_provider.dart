@@ -6,7 +6,7 @@ import 'package:fit_you/models/User.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider with ChangeNotifier {
-  //final url = 'http://localhost:5000/fitYou';
+  //final url = 'http://localhost:5000/';
   final url = 'http://10.0.2.2:5000/';
 
   static User user = User(
