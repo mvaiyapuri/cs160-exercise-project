@@ -208,7 +208,7 @@ def get_workout(id):
 
     return workouts_schema.jsonify(result)
 
-# This function gets all available workouts for a given user
+# This function gets all available warmup workouts for a given user
 @app.route('/warmup/<id>', methods=['GET'])
 def get_warmup(id):
     user = User.query.get(id)
@@ -220,7 +220,7 @@ def get_warmup(id):
     return workouts_schema.jsonify(result)
 
 
-# This function gets all available workouts for a given user
+# This function gets all available main workouts for a given user
 @app.route('/mainWorkout/<id>', methods=['GET'])
 def get_mainWorkout(id):
     user = User.query.get(id)
@@ -232,13 +232,25 @@ def get_mainWorkout(id):
     return workouts_schema.jsonify(result)
 
 
-# This function gets all available workouts for a given user
+# This function gets all available cooldown workouts for a given user
 @app.route('/cooldown/<id>', methods=['GET'])
 def get_cooldown(id):
     user = User.query.get(id)
     userLevel = user.level
 
     workouts = Workout.query.filter_by(level=userLevel, workoutType='cooldown')
+    result = workouts_schema.dump(workouts)
+
+    return workouts_schema.jsonify(result)
+
+
+# This function gets all available recreational workouts for a given user
+@app.route('/recreation/<id>', methods=['GET'])
+def get_recreation(id):
+    user = User.query.get(id)
+    userLevel = user.level
+
+    workouts = Workout.query.filter_by(level=userLevel, workoutType='recreation')
     result = workouts_schema.dump(workouts)
 
     return workouts_schema.jsonify(result)
