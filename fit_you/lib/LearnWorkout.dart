@@ -148,17 +148,25 @@ class _LearnWorkoutState extends State<LearnWorkout> {
                                   //SizedBox(height: 20),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                                    child: Text(
-                                      snapshot.data!.description,
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          snapshot.data!.workoutname,
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          snapshot.data!.description,
+                                          style: TextStyle(
+                                            color: Colors.red,
                                           fontSize: 20),
-                                    ),
+                                        ),
+                                      ]
                                   )
-
-
-                                ]
+                                  )]
                             ),
                           )
                       ),
