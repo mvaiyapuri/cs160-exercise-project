@@ -107,29 +107,33 @@ class UserProvider with ChangeNotifier {
     return user;
   }
 
-  // Future<User> editUser(dynamic id) async {
-  //
-  //   Map<String, dynamic> request = {"id": id};
-  //   final headers = {'Content-Type': 'application/json'};
-  //   final response = await http.post(Uri.parse('${url}profile/$id'), headers: headers, body: json.encode(request));
-  //   Map<String, dynamic> responsePayload = json.decode(response.body);
-  //   //print(responsePayload['id']);
-  //   //print(responsePayload['password']);
-  //   user = User(
-  //       username: responsePayload['username'],
-  //       firstname: responsePayload['firstname'],
-  //       lastname: responsePayload['lastname'],
-  //       password: responsePayload['password'],
-  //       dob: responsePayload['dob'],
-  //       height: responsePayload['height'],
-  //       weight: responsePayload['weight'],
-  //       gender: responsePayload['gender'],
-  //       level: responsePayload['level']
-  //   );
-  //   //id = user.id;
-  //   //print(user.password);
-  //   notifyListeners();
-  //   return user;
-  // }
+  Future<User> editLevel(String level) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    Map<String, dynamic> request = {"id": userId};
+    final headers = {'Content-Type': 'application/json'};
+    final response = await http.get(Uri.parse('${url}profile/$userId'));
+    Map<String, dynamic> responsePayload = json.decode(response.body);
+    //print(responsePayload['id']);
+    //print(responsePayload['password']);
+    user = User(
+        username: responsePayload['username'],
+        firstname: responsePayload['firstname'],
+        lastname: responsePayload['lastname'],
+        password: responsePayload['password'],
+        dob: responsePayload['dob'],
+        height: responsePayload['height'],
+        weight: responsePayload['weight'],
+        gender: responsePayload['gender'],
+        level: responsePayload['level']
+    );
+    user.level = level;
+    final response2 = await http.put(Uri.parse('${url}profile/$userId'), headers: headers, body: json.encode(user));
+
+    //id = user.id;
+    //print(user.password);
+    notifyListeners();
+    return user;
+  }
 }
 
