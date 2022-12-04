@@ -7,6 +7,7 @@ import 'FindNewPlan.dart';
 import 'Stats.dart';
 import 'LearnWorkout.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../provider/workout_provider.dart';
 
@@ -170,7 +171,9 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(workoutProvider.warmups[i].workoutname + "     (" + workoutProvider.warmups[i].duration.toString() + " sec)", style: TextStyle(fontSize: 20)),
                                         ),
-                                        onPressed: () {
+                                        onPressed: () async {
+                                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                                          await prefs.setInt('workoutid', workoutProvider.warmups[i].id);
                                           Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
 
                                         },
@@ -221,7 +224,10 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                                     child: Text(workoutProvider.mainworkouts[i].workoutname + "     (" + workoutProvider.mainworkouts[i].duration.toString() + " sec)", style: TextStyle(fontSize: 20)),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      await prefs.setInt('workoutid', workoutProvider.mainworkouts[i].id);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
                                     },
                                   )
                               ),
@@ -259,7 +265,7 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                         : Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.46,
                         child: ListView.builder(
                             itemCount: workoutProvider.cooldowns.length,
                             itemBuilder: (ctx, i) => Padding(
@@ -270,7 +276,10 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                                     child: Text(workoutProvider.cooldowns[i].workoutname + "     (" + workoutProvider.cooldowns[i].duration.toString() + " sec)", style: TextStyle(fontSize: 20)),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      await prefs.setInt('workoutid', workoutProvider.cooldowns[i].id);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
                                     },
                                   )
                               ),
@@ -316,7 +325,7 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                         : Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.42,
                         child: ListView.builder(
                             itemCount: workoutProvider.recreationals.length,
                             itemBuilder: (ctx, i) => Padding(
@@ -327,7 +336,10 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                                     child: Text(workoutProvider.recreationals[i].workoutname + "     (" + workoutProvider.recreationals[i].duration.toString() + " hr)", style: TextStyle(fontSize: 20)),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      await prefs.setInt('workoutid', workoutProvider.recreationals[i].id);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
                                     },
                                   )
                               ),

@@ -39,10 +39,11 @@ class WorkoutProvider with ChangeNotifier {
   }
 
   Future<Workout> get getWorkout async{
+    var response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var workoutId = prefs.getInt('id');
+    var workoutId = prefs.getInt('workoutid');
     print("ID RECIEVED: " + workoutId.toString());
-    final response = await http.get(Uri.parse('${url}workout/$workoutId'));
+    response = await http.get(Uri.parse('${url}workout/$workoutId'));
     Map<String, dynamic> responsePayload = json.decode(response.body);
     workout = Workout(
         id: responsePayload['id'],
