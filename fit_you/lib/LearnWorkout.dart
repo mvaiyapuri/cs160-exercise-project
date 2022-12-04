@@ -124,12 +124,12 @@ class _LearnWorkoutState extends State<LearnWorkout> {
             //mainAxisSize: MainAxisSize.max,
             children:[
               FutureBuilder(
-                future: Provider.of<WorkoutProvider>(context, listen: false).get,
+                future: Provider.of<WorkoutProvider>(context, listen: false).getWorkout,
                 builder: (ctx, snapshot) =>
                 snapshot.connectionState == ConnectionState.waiting
                     ? Center(child: CircularProgressIndicator())
                     :
-                Consumer<UserProvider>(
+                Consumer<WorkoutProvider>(
                   child: Center(
                     heightFactor: MediaQuery.of(context).size.height * 0.03,
                     child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
@@ -145,14 +145,18 @@ class _LearnWorkoutState extends State<LearnWorkout> {
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: Column(
                                 children: [
-                                  SizedBox(height: 20),
-                                  Text(
-                                    snapshot.data!.username,
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 50),
-                                  ),
+                                  //SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                                    child: Text(
+                                      snapshot.data!.description,
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                  )
+
 
                                 ]
                             ),

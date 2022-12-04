@@ -166,7 +166,10 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                                        child: Text(workoutProvider.warmups[i].workoutname + "     (" + workoutProvider.warmups[i].duration.toString() + " sec)", style: TextStyle(fontSize: 20)),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(workoutProvider.warmups[i].workoutname + "     (" + workoutProvider.warmups[i].duration.toString() + " sec)", style: TextStyle(fontSize: 20)),
+                                        ),
                                         onPressed: () {
                                           Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
 
