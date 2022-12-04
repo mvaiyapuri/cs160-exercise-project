@@ -3,6 +3,8 @@ import 'Profile.dart';
 import 'home.dart';
 import 'WorkoutPlan.dart';
 import 'Stats.dart';
+import '../provider/user_provider.dart';
+import 'package:provider/provider.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -124,7 +126,9 @@ class _FindNewPlanState extends State<FindNewPlan> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                     child: const Text('Beginner', style: TextStyle(fontSize: 25)),
-                    onPressed: () {
+                    onPressed: () async {
+                      await Provider.of<UserProvider>(context, listen: false).editLevel("Beginner");
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
                     },
                   )
               ),
@@ -134,7 +138,10 @@ class _FindNewPlanState extends State<FindNewPlan> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
                     child: const Text('Intermediate', style: TextStyle(fontSize: 25)),
-                    onPressed: () {
+                    onPressed: () async {
+                      await Provider.of<UserProvider>(context, listen: false).editLevel("Intermediate");
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPlan()));
+
                     },
                   )
               ),

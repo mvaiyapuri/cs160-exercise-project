@@ -6,7 +6,7 @@ import 'package:fit_you/models/User.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider with ChangeNotifier {
-  //final url = 'http://localhost:5000/fitYou';
+  //final url = 'http://localhost:5000/';
   final url = 'http://10.0.2.2:5000/';
 
   static User user = User(
@@ -52,7 +52,7 @@ class UserProvider with ChangeNotifier {
     user.weight = responsePayload['weight'];
     user.gender = responsePayload['gender'];
     user.level = responsePayload['level'];
-    print(user.password);
+    //print(user.password);
     notifyListeners();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('id', user.id);
@@ -65,8 +65,8 @@ class UserProvider with ChangeNotifier {
     final headers = {'Content-Type': 'application/json'};
     final response = await http.post(Uri.parse('${url}signup'), headers: headers, body: json.encode(request));
     Map<String, dynamic> responsePayload = json.decode(response.body);
-    print(responsePayload['id']);
-    print(responsePayload['password']);
+    //print(responsePayload['id']);
+    //print(responsePayload['password']);
     user = User(
         username: responsePayload['username'],
         firstname: responsePayload['firstname'],
@@ -79,7 +79,7 @@ class UserProvider with ChangeNotifier {
         level: responsePayload['level']
     );
     //id = user.id;
-    print(user.password);
+    //print(user.password);
     notifyListeners();
     return user;
   }
@@ -102,8 +102,38 @@ class UserProvider with ChangeNotifier {
           gender: responsePayload['gender'],
           level: responsePayload['level']
       );
-    print(user.password);
+    //print(user.password);
+    notifyListeners();
+    return user;
+  }
+
+  Future<User> editLevel(String level) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    Map<String, dynamic> request = {"id": userId};
+    final headers = {'Content-Type': 'application/json'};
+    final response = await http.get(Uri.parse('${url}profile/$userId'));
+    Map<String, dynamic> responsePayload = json.decode(response.body);
+    //print(responsePayload['id']);
+    //print(responsePayload['password']);
+    user = User(
+        username: responsePayload['username'],
+        firstname: responsePayload['firstname'],
+        lastname: responsePayload['lastname'],
+        password: responsePayload['password'],
+        dob: responsePayload['dob'],
+        height: responsePayload['height'],
+        weight: responsePayload['weight'],
+        gender: responsePayload['gender'],
+        level: responsePayload['level']
+    );
+    user.level = level;
+    final response2 = await http.put(Uri.parse('${url}profile/$userId'), headers: headers, body: json.encode(user));
+
+    //id = user.id;
+    //print(user.password);
     notifyListeners();
     return user;
   }
 }
+
