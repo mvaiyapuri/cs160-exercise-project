@@ -13,6 +13,13 @@ class WorkoutProvider with ChangeNotifier {
   static List<Workout> _mainworkouts = [];
   static List<Workout> _cooldowns = [];
   static List<Workout> _recreationals = [];
+  static Workout workout = Workout(
+    workoutname: 'workoutname',
+    level: 'level',
+    description: 'description',
+    workoutType: 'workoutType',
+    duration: 60
+  );
 
   List<Workout> get warmups {
     return [..._warmups];
@@ -30,15 +37,21 @@ class WorkoutProvider with ChangeNotifier {
     return [..._recreationals];
   }
 
-  Future<void> get getWorkout async{
+  Future<Workout> get getWorkout async{
     var response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = prefs.getInt('id');
     response = await http.get(Uri.parse('${url}workout/$userId'));
-    List<dynamic> body = json.decode(response.body);
-    _warmups = body.map((e) => Workout(
-        id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
-        .toList();
+    Map<String, dynamic> responsePayload = json.decode(response.body);
+    workout = Workout(
+        workoutname: responsePayload['workoutname'],
+        level: responsePayload['level'],
+        description: responsePayload['description'],
+        workoutType: responsePayload['workoutType'],
+        duration: responsePayload['duration']
+    );
+    notifyListeners();
+    return workout;
   }
 
   Future<void> get getWarmups async{

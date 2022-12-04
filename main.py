@@ -197,16 +197,12 @@ def edit_user(id):
 
     return user_schema.jsonify(user)
 
-# This function gets all available workouts for a given user
+# This function takes in an id of a workout and returns the workout
 @app.route('/workout/<id>', methods=['GET'])
 def get_workout(id):
-    user = User.query.get(id)
-    userLevel = user.level
+    workout = Workout.query.get(id)
 
-    workouts = Workout.query.filter_by(level=userLevel)
-    result = workouts_schema.dump(workouts)
-
-    return workouts_schema.jsonify(result)
+    return workout_schema.jsonify(workout)
 
 # This function gets all available warmup workouts for a given user
 @app.route('/warmup/<id>', methods=['GET'])
