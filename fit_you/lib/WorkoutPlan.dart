@@ -1,10 +1,14 @@
 import 'package:fit_you/LearnWorkout.dart';
+import 'package:fit_you/models/Workout.dart';
 import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'home.dart';
 import 'FindNewPlan.dart';
 import 'Stats.dart';
 import 'LearnWorkout.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/workout_provider.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -136,19 +140,43 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                     )
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
-                    child: const Text('Temp Workout', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
+              FutureBuilder(
+                  future: Provider.of<WorkoutProvider>(context, listen: false).getWarmups,
+                  builder: (ctx, snapshot) =>
+                  snapshot.connectionState == ConnectionState.waiting
+              ? Center(child: CircularProgressIndicator())
+                :
+                  Consumer<WorkoutProvider>(
+                    child: Center(
+                      heightFactor: MediaQuery.of(context).size.height * 0.03,
+                      child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
+                    ),
+                    builder: (ctx, workoutProvider, child) => workoutProvider.warmups.isEmpty
+                      ?  child as Widget
+                        : Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: ListView.builder(
+                              itemCount: workoutProvider.warmups.length,
+                              itemBuilder: (ctx, i) => Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+                                  child: Text(workoutProvider.warmups[i].workoutname + "         (" + workoutProvider.warmups[i].duration.toString() + " sec)", style: TextStyle(fontSize: 18)),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LearnWorkout()));
 
-                    },
-                  ),
+                                  },
+
                 ),
-                const SizedBox(height: 10),
+              )
+          ),
+        ),
+      ),
+    ),
+    ),
+                //const SizedBox(height: 10),
                 const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
