@@ -30,6 +30,17 @@ class WorkoutProvider with ChangeNotifier {
     return [..._recreationals];
   }
 
+  Future<void> get getWorkout async{
+    var response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    response = await http.get(Uri.parse('${url}workout/$userId'));
+    List<dynamic> body = json.decode(response.body);
+    _warmups = body.map((e) => Workout(
+        id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
+        .toList();
+  }
+
   Future<void> get getWarmups async{
     var response;
     SharedPreferences prefs = await SharedPreferences.getInstance();

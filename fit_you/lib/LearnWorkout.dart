@@ -1,9 +1,11 @@
+import 'package:fit_you/provider/workout_provider.dart';
 import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'home.dart';
 import 'FindNewPlan.dart';
 import 'Stats.dart';
 import 'WorkoutPlan.dart';
+import 'package:provider/provider.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -121,7 +123,45 @@ class _LearnWorkoutState extends State<LearnWorkout> {
             crossAxisAlignment: CrossAxisAlignment.center,
             //mainAxisSize: MainAxisSize.max,
             children:[
+              FutureBuilder(
+                future: Provider.of<WorkoutProvider>(context, listen: false).get,
+                builder: (ctx, snapshot) =>
+                snapshot.connectionState == ConnectionState.waiting
+                    ? Center(child: CircularProgressIndicator())
+                    :
+                Consumer<UserProvider>(
+                  child: Center(
+                    heightFactor: MediaQuery.of(context).size.height * 0.03,
+                    child: const Text('You have no tasks.', style: TextStyle(fontSize: 18),),
+                  ),
+                  builder: (ctx, userProvider, child) => !snapshot.hasData
+                      ?  child as Widget
+                      : Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: Builder(
+                          builder: (ctx) => Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Column(
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    snapshot.data!.username,
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 50),
+                                  ),
 
+                                ]
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
