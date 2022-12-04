@@ -24,4 +24,37 @@ class WorkoutProvider with ChangeNotifier {
       id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
     .toList();
   }
+
+  Future<void> get getMainWorkouts async{
+    var response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    response = await http.get(Uri.parse('${url}mainWorkout/$userId'));
+    List<dynamic> body = json.decode(response.body);
+    mainworkouts = body.map((e) => Workout(
+        id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
+        .toList();
+  }
+
+  Future<void> get getCooldowns async{
+    var response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    response = await http.get(Uri.parse('${url}cooldown/$userId'));
+    List<dynamic> body = json.decode(response.body);
+    cooldowns = body.map((e) => Workout(
+        id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
+        .toList();
+  }
+
+  Future<void> get getRecreations async{
+    var response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    response = await http.get(Uri.parse('${url}recreation/$userId'));
+    List<dynamic> body = json.decode(response.body);
+    recreationals = body.map((e) => Workout(
+        id: e['id'], workoutname: e['workoutname'], level: e['level'], description: e['description'], workoutType: e['workoutType'], duration: e['duration']))
+        .toList();
+  }
 }
