@@ -42,7 +42,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                     : Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.7,
                     child: Builder(
                         builder: (ctx) => Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
@@ -67,6 +67,21 @@ class _TasksWidgetState extends State<TasksWidget> {
                                 SizedBox(height: 20),
                                 Text(
                                   snapshot.data!.gender,
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "Level:",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                Text(
+                                  snapshot.data!.level,
                                   style: TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold,
