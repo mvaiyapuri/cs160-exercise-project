@@ -73,6 +73,14 @@ class _TasksWidgetState extends State<TasksWidget> {
                                       fontSize: 30),
                                 ),
                                 SizedBox(height: 20),
+                                Text(
+                                  snapshot.data!.level,
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                SizedBox(height: 20),
                                 Row(
                                   children: const [
                                     SizedBox(width: 60, height: 30),
